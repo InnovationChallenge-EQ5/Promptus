@@ -1,6 +1,13 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+   <NuxtLayout>
+      <NuxtPage/>
+   </NuxtLayout>
 </template>
+
+<style lang="scss">
+   @import "assets/vendor/material-symbols/outlined.css";
+</style>
