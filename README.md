@@ -1,1 +1,1 @@
-# Promt-Tus
+# Promptus
