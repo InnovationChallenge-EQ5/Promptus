@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using Azure.Identity;
 using promptus_api.Endpoints.v1;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddProblemDetails()
     .AddHealthChecks();
+
+//Azure Key Vault.
+if (builder.Environment.IsProduction())
+{
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
+        new DefaultAzureCredential());
+}
 
 //Versioning.
 builder.Services.AddApiVersioning(options =>
