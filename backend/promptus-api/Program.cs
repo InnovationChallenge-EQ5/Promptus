@@ -45,8 +45,8 @@ app.UseHttpsRedirection();
 app.MapHealthChecks("/health")
     .DisableHttpMetrics();
 
-var group = app.NewVersionedApi("api/v{version:apiVersion}")
-    .MapGroup("prompts");
+var group = app.NewVersionedApi("api")
+    .MapGroup("api/v{version:apiVersion}/prompts");
 group.MapGet("suggestions", PromptEndpoint.GetPromptSuggestions)
     .MapToApiVersion(1);
 
