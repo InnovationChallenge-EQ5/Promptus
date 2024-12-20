@@ -1,26 +1,39 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
-   <div>
-      <div class="text-green-700">Este es mi index</div>
+   <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-animated text-white">
+      <h1 class="text-4xl font-bold mb-4">Promptus</h1>
+      <div class="text-center text-lg mb-6">
+         Perfecciona tus prompts, potencia tu IA
+      </div>
 
       <NuxtLink to="prompt">
-         Empezar
+         <button class="px-6 py-2 text-lg font-semibold bg-white text-[#382E2E] rounded-full">
+            Comenzar
+         </button>
       </NuxtLink>
-
-      <NuxtLink to="historico/settings">
-         Historico
-      </NuxtLink>
-
-      <div class="flex flex-col gap-1">
-         <PrimeInputText name="username" type="text" placeholder="Username" />
-         <PrimeMessage severity="error" size="small" variant="simple">ASDD</PrimeMessage>
-      </div>
    </div>
 </template>
 
 <style scoped>
+/* Animación de gradiente en movimiento */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
+.bg-gradient-animated {
+  background: linear-gradient(to bottom, #001845 0%, #0F2E68 50%, #001845 100%);
+  background-size: 200% 200%;
+  animation: gradientMove 5s ease infinite;
+}
 </style>
+

@@ -4,7 +4,6 @@
 
 <template>
 <div>
-   Index del historico
 </div>
 </template>
 

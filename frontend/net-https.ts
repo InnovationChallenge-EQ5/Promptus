@@ -42,8 +42,8 @@ if (process.env.NODE_ENV === 'development') {
                 }
             });
 
-        while (!fs.existsSync(certificate.certFilePath)) {
+       /* while (!fs.existsSync(certificate.certFilePath)) {
             sleep(1000);
-        }
+        } **/
     }
 }

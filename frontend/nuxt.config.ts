@@ -33,9 +33,9 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     devServer: {
         port: 3050,
-        https: {
+    /* https: {
             key: certificate.keyFilePath,
             cert: certificate.certFilePath
-        }
+        } **/
     }
 })

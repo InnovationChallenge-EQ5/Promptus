@@ -5,7 +5,8 @@
 <template>
 <div>
 
-Settings</div>
+
+</div>
 </template>
 
 <style scoped>
