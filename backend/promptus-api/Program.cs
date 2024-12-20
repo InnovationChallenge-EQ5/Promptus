@@ -22,8 +22,7 @@ else
 {
     builder.Configuration.AddAzureKeyVault(
         new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
-        new DefaultAzureCredential(new DefaultAzureCredentialOptions()
-            { ManagedIdentityClientId = builder.Configuration["Azure:AppServiceManagedId"] }));
+        new DefaultAzureCredential());
 }
 
 //Versioning.
