@@ -13,7 +13,7 @@ if (builder.Environment.IsProduction())
 {
     builder.Configuration.AddAzureKeyVault(
         new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
-        new DefaultAzureCredential());
+        new DefaultAzureCredential(new DefaultAzureCredentialOptions() {ManagedIdentityClientId = builder.Configuration["KeyVaultIdentity"]}));
 }
 
 //Versioning.
