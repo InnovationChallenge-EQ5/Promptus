@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using promptus_api.Endpoints.v1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +41,11 @@ app.UseExceptionHandler(new ExceptionHandlerOptions
 app.UseHttpsRedirection();
 
 app.MapHealthChecks("/health")
-    .DisableHttpMetrics()
-    .AllowAnonymous();
+    .DisableHttpMetrics();
+
+var group = app.NewVersionedApi("api/v{version:apiVersion}")
+    .MapGroup("prompts");
+group.MapGet("suggestions", PromptEndpoint.GetPromptSuggestions)
+    .MapToApiVersion(1);
 
 app.Run();
