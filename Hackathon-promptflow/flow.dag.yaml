@@ -1,0 +1,183 @@
+id: template_standard_flow
+name: Template Standard Flow
+inputs:
+  inPrompt:
+    type: string
+    description: Prompt de entrada, se asume que NO TIENE errores gramaticales,
+      consultas incompletas o entradas poco claras
+    is_chat_input: false
+outputs:
+  outPrompt:
+    type: string
+    reference: ${outputDecisor.output}
+nodes:
+- name: moderateTextNode
+  type: python
+  source:
+    type: package
+    tool: promptflow.tools.azure_content_safety.analyze_text
+  inputs:
+    connection: icontentsafetyhackaton
+    hate_category: high_sensitivity
+    self_harm_category: high_sensitivity
+    sexual_category: high_sensitivity
+    text: ${inputs.inPrompt}
+    violence_category: high_sensitivity
+  use_variants: false
+- name: checkoutModerate
+  type: python
+  source:
+    type: code
+    path: checkoutModerate.py
+  inputs:
+    inPrompt: ${inputs.inPrompt}
+    outModerate: ${moderateTextNode.output}
+  use_variants: false
+- name: LLMModerated
+  use_variants: true
+- name: LLMSensitive
+  type: llm
+  source:
+    type: code
+    path: LLMSensitive.jinja2
+  inputs:
+    deployment_name: gpt-4o
+    temperature: 1
+    top_p: 1
+    response_format:
+      type: text
+    sentitivePrompt: ${LLMModerated.output}
+  provider: AzureOpenAI
+  connection: hackbox-eq5-openia
+  api: chat
+  module: promptflow.tools.aoai
+  use_variants: false
+- name: dmRTCF
+  type: llm
+  source:
+    type: code
+    path: dmRTCF.jinja2
+  inputs:
+    deployment_name: gpt-4o
+    temperature: 0.3
+    top_p: 1
+    max_tokens: 300
+    response_format:
+      type: text
+    input1: ${LLMSensitive.output}
+  provider: AzureOpenAI
+  connection: hackbox-eq5-openia
+  api: chat
+  module: promptflow.tools.aoai
+  use_variants: false
+- name: impRTCFPrompt
+  type: llm
+  source:
+    type: code
+    path: impRTCFPrompt.jinja2
+  inputs:
+    deployment_name: gpt-4o
+    temperature: 0.5
+    top_p: 1
+    max_tokens: 200
+    response_format:
+      type: text
+    input2: ${LLMSensitive.output}
+  provider: AzureOpenAI
+  connection: hackbox-eq5-openia
+  api: chat
+  module: promptflow.tools.aoai
+  activate:
+    when: ${dmRTCF.output}
+    is: "True"
+  use_variants: false
+- name: impNoRTCFPrompt
+  type: llm
+  source:
+    type: code
+    path: impNoRTCFPrompt.jinja2
+  inputs:
+    deployment_name: gpt-4o
+    temperature: 0.5
+    top_p: 1
+    max_tokens: 200
+    response_format:
+      type: text
+    input3: ${LLMSensitive.output}
+  provider: AzureOpenAI
+  connection: hackbox-eq5-openia
+  api: chat
+  module: promptflow.tools.aoai
+  activate:
+    when: ${dmRTCF.output}
+    is: "False"
+  use_variants: false
+- name: outputDecisor
+  type: python
+  source:
+    type: code
+    path: outputDecisor.py
+  inputs:
+    input: ${impRTCFPrompt.output}
+    input2: ${impNoRTCFPrompt.output}
+  use_variants: false
+node_variants:
+  LLMModerated:
+    default_variant_id: variant_0
+    variants:
+      variant_0:
+        node:
+          name: LLMModerated
+          type: llm
+          source:
+            type: code
+            path: LLMHate.jinja2
+          inputs:
+            deployment_name: gpt-4o
+            temperature: 1
+            top_p: 1
+            response_format:
+              type: text
+            outModerateHate: ${checkoutModerate.output}
+          provider: AzureOpenAI
+          connection: hackbox-eq5-openia
+          api: chat
+          module: promptflow.tools.aoai
+      variant_1:
+        node:
+          name: LLMModerated
+          type: llm
+          source:
+            type: code
+            path: LLMModerated__variant_1.jinja2
+          inputs:
+            deployment_name: gpt-4o
+            temperature: 0.5
+            top_p: 1
+            response_format:
+              type: text
+            outModerateHate: ${checkoutModerate.output}
+          provider: AzureOpenAI
+          connection: hackbox-eq5-openia
+          api: chat
+          module: promptflow.tools.aoai
+      variant_2:
+        node:
+          name: LLMModerated
+          type: llm
+          source:
+            type: code
+            path: LLMModerated__variant_2.jinja2
+          inputs:
+            deployment_name: gpt-4o
+            temperature: 0.5
+            top_p: 0.5
+            response_format:
+              type: text
+            outModerateHate: ${checkoutModerate.output}
+          provider: AzureOpenAI
+          connection: hackbox-eq5-openia
+          api: chat
+          module: promptflow.tools.aoai
+environment:
+  python_requirements_txt: requirements.txt
