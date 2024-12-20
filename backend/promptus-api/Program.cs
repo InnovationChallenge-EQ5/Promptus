@@ -3,7 +3,9 @@ using promptus_api.Endpoints.v1;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHealthChecks();
+builder.Services
+    .AddProblemDetails()
+    .AddHealthChecks();
 
 //Versioning.
 builder.Services.AddApiVersioning(options =>
