@@ -10,23 +10,20 @@ builder.Services
     .AddHealthChecks();
 
 //Azure Key Vault.
-if (builder.Environment.IsProduction())
+var credentials = builder.Configuration.GetSection("AzureAppIdentity").Get<AzureAppIdentity>();
+if (credentials is not null)
+{
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
+        new ClientSecretCredential(credentials.TenantId, credentials.ClientId, credentials.ClientSecret)
+    );
+}
+else
 {
     builder.Configuration.AddAzureKeyVault(
         new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
         new DefaultAzureCredential(new DefaultAzureCredentialOptions()
             { ManagedIdentityClientId = builder.Configuration["Azure:AppServiceManagedId"] }));
-}
-else
-{
-    var credentials = builder.Configuration.GetSection("AzureAppIdentity").Get<AzureAppIdentity>()
-                      ?? throw new InvalidOperationException(
-                          "The AzureAppIdentity section was not found in the appsettings.json file.");
-
-    builder.Configuration.AddAzureKeyVault(
-        new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
-        new ClientSecretCredential(credentials.TenantId, credentials.ClientId, credentials.ClientSecret)
-    );
 }
 
 //Versioning.
