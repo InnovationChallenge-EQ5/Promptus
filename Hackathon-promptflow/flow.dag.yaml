@@ -34,7 +34,23 @@ nodes:
     outModerate: ${moderateTextNode.output}
   use_variants: false
 - name: LLMModerated
-  use_variants: true
+  type: llm
+  source:
+    type: code
+    path: LLMHate.jinja2
+  inputs:
+    deployment_name: gpt-4o
+    temperature: 0.7
+    top_p: 1
+    max_tokens: 300
+    response_format:
+      type: text
+    outModerateHate: ${checkoutModerate.output}
+  provider: AzureOpenAI
+  connection: hackbox-eq5-openia
+  api: chat
+  module: promptflow.tools.aoai
+  use_variants: false
 - name: LLMSensitive
   type: llm
   source:
@@ -44,6 +60,7 @@ nodes:
     deployment_name: gpt-4o
     temperature: 1
     top_p: 1
+    max_tokens: 300
     response_format:
       type: text
     sentitivePrompt: ${LLMModerated.output}
@@ -77,7 +94,7 @@ nodes:
     path: impRTCFPrompt.jinja2
   inputs:
     deployment_name: gpt-4o
-    temperature: 0.5
+    temperature: 0.7
     top_p: 1
     max_tokens: 200
     response_format:
@@ -98,7 +115,7 @@ nodes:
     path: impNoRTCFPrompt.jinja2
   inputs:
     deployment_name: gpt-4o
-    temperature: 0.5
+    temperature: 0.7
     top_p: 1
     max_tokens: 200
     response_format:
@@ -121,63 +138,6 @@ nodes:
     input: ${impRTCFPrompt.output}
     input2: ${impNoRTCFPrompt.output}
   use_variants: false
-node_variants:
-  LLMModerated:
-    default_variant_id: variant_0
-    variants:
-      variant_0:
-        node:
-          name: LLMModerated
-          type: llm
-          source:
-            type: code
-            path: LLMHate.jinja2
-          inputs:
-            deployment_name: gpt-4o
-            temperature: 1
-            top_p: 1
-            response_format:
-              type: text
-            outModerateHate: ${checkoutModerate.output}
-          provider: AzureOpenAI
-          connection: hackbox-eq5-openia
-          api: chat
-          module: promptflow.tools.aoai
-      variant_1:
-        node:
-          name: LLMModerated
-          type: llm
-          source:
-            type: code
-            path: LLMModerated__variant_1.jinja2
-          inputs:
-            deployment_name: gpt-4o
-            temperature: 0.5
-            top_p: 1
-            response_format:
-              type: text
-            outModerateHate: ${checkoutModerate.output}
-          provider: AzureOpenAI
-          connection: hackbox-eq5-openia
-          api: chat
-          module: promptflow.tools.aoai
-      variant_2:
-        node:
-          name: LLMModerated
-          type: llm
-          source:
-            type: code
-            path: LLMModerated__variant_2.jinja2
-          inputs:
-            deployment_name: gpt-4o
-            temperature: 0.5
-            top_p: 0.5
-            response_format:
-              type: text
-            outModerateHate: ${checkoutModerate.output}
-          provider: AzureOpenAI
-          connection: hackbox-eq5-openia
-          api: chat
-          module: promptflow.tools.aoai
+node_variants: {}
 environment:
   python_requirements_txt: requirements.txt
