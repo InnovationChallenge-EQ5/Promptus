@@ -1,13 +1,17 @@
 using Asp.Versioning;
 using Azure.Identity;
 using promptus_api.Endpoints.v1;
+using promptus_api.HttpClients;
 using promptus_api.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddHttpClient()
     .AddProblemDetails()
     .AddHealthChecks();
+
+builder.Services.AddHttpClient<PromptFlowHttpClient>();
 
 //Azure Key Vault.
 var credentials = builder.Configuration.GetSection("AzureAppIdentity").Get<AzureAppIdentity>();
