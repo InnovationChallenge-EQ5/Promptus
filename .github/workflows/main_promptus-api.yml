@@ -22,10 +22,10 @@ jobs:
           dotnet-version: '9.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build backend/promptus-api --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/promptus-api"
+        run: dotnet publish backend/promptus-api -c Release -o "${{env.DOTNET_ROOT}}/promptus-api"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
