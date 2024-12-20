@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>promptus_api</RootNamespace>
+        <UserSecretsId>18dc28c2-593a-40ba-8b5e-077bd63f2085</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

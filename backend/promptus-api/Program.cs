@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using Azure.Identity;
 using promptus_api.Endpoints.v1;
+using promptus_api.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,19 @@ if (builder.Environment.IsProduction())
 {
     builder.Configuration.AddAzureKeyVault(
         new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
-        new DefaultAzureCredential(new DefaultAzureCredentialOptions() {ManagedIdentityClientId = builder.Configuration["KeyVaultIdentity"]}));
+        new DefaultAzureCredential(new DefaultAzureCredentialOptions()
+            { ManagedIdentityClientId = builder.Configuration["Azure:AppServiceManagedId"] }));
+}
+else
+{
+    var credentials = builder.Configuration.GetSection("AzureAppIdentity").Get<AzureAppIdentity>()
+                      ?? throw new InvalidOperationException(
+                          "The AzureAppIdentity section was not found in the appsettings.json file.");
+
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(builder.Configuration["KeyVaultUrl"] ?? throw new InvalidOperationException()),
+        new ClientSecretCredential(credentials.TenantId, credentials.ClientId, credentials.ClientSecret)
+    );
 }
 
 //Versioning.
