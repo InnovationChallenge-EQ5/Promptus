@@ -1,10 +1,8 @@
 <template>
    <div :class="darkMode ? 'dark' : ''">
      <div class="min-h-screen bg-secondary text-textPrimary dark:bg-secondary-dark dark:text-textPrimary-dark">
-       <!-- Encabezado con el toggle -->
        <header class="flex items-center justify-between p-4 bg-primary dark:bg-primary-dark">
          <div class="flex items-center ml-auto">
-           <!-- Toggle Switch -->
            <span class="mr-2">🌞</span>
            <label for="dark-mode-toggle" class="relative inline-block w-12 h-6">
              <input 
@@ -14,12 +12,14 @@
                v-model="darkMode"
              />
              <span class="toggle-background absolute inset-0 bg-gray-400 rounded-full cursor-pointer transition-colors"></span>
-             <span class="toggle-dot w-6 h-6 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform transform" :class="{ 'translate-x-6': darkMode }"></span>
+             <span 
+               class="toggle-dot w-6 h-6 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform transform" 
+               :class="{ 'translate-x-6': darkMode }"
+             ></span>
            </label>
            <span class="ml-2">🌙</span>
          </div>
        </header>
- 
        <main>
          <slot />
        </main>
@@ -34,23 +34,20 @@
  </script>
  
  <style scoped>
- /* Estilos del toggle */
  .toggle-background {
-    background-color: #ddd;
+     background-color: #ddd; 
  }
  
  .toggle-dot {
-    transition: transform 0.3s ease-in-out;
- }
- 
- input:checked + .toggle-background {
-    background-color: #4caf50; 
+     transition: transform 0.3s ease-in-out;
  }
  
  input:checked + .toggle-background .toggle-dot {
-    transform: translateX(24px); 
+     transform: translateX(24px); 
  }
  </style>
+ 
+ 
  
  
  

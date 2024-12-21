@@ -3,9 +3,11 @@
 
 <template>
    <div class="flex flex-col items-center justify-center min-h-screen bg-gradient-animated text-white">
+      <img src="/logo.png" alt="LogoPromptus" class="mb-8 max-w-xs">
+
       <h1 class="text-4xl font-bold mb-4">Promptus</h1>
       <div class="text-center text-lg mb-6">
-         Perfecciona tus prompts, potencia tu IA
+         Perfect your prompts, boost your AI
       </div>
 
       <NuxtLink to="prompt">
@@ -17,7 +19,6 @@
 </template>
 
 <style scoped>
-/* Animación de gradiente en movimiento */
 @keyframes gradientMove {
   0% {
     background-position: 0% 50%;
@@ -36,4 +37,7 @@
   animation: gradientMove 5s ease infinite;
 }
 </style>
+
+
+
 

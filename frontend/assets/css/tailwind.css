@@ -5,22 +5,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
 
 @layer prime {
-    /* Variables del modo claro */
     :root {
-        --p-primary-color: #FFFFFF; /* Fondo claro y botones en modo oscuro */
-        --p-surface-0: #FFFFFF; /* Fondo claro */
-        --p-text-color: #382E2E; /* Texto en color oscuro sobre fondos claros */
+        --p-primary-color: #FFFFFF; 
+        --p-surface-0: #FFFFFF; 
+        --p-text-color: #382E2E; 
     }
 
-    /* Modo oscuro */
+    /* Dark mode */
     @media (prefers-color-scheme: dark) {
         :root {
-            --p-primary-color: #0F2E68; /* Fondo oscuro y botones en modo claro */
-            --p-text-color: #FFFFFF; /* Texto blanco sobre fondo oscuro */
-            --p-surface-0: #0F2E68; /* Fondo oscuro */
+            --p-primary-color: #0F2E68; 
+            --p-text-color: #FFFFFF; 
+            --p-surface-0: #0F2E68; 
         }
 
-        /* Fondo con gradiente en el modo oscuro */
         body {
             background: linear-gradient(to bottom, #001845 0%, #0F2E68 50%, #001845 100%);
             background-size: 200% 200%;
@@ -28,7 +26,6 @@
         }
     }
 
-    /* Fondo con gradiente en el modo oscuro */
     .dark body {
         background: linear-gradient(to bottom, #001845 0%, #0F2E68 50%, #001845 100%);
         background-size: 200% 200%;
@@ -36,7 +33,6 @@
     }
 }
 
-/* Animación del gradiente */
 @keyframes gradientMove {
     0% {
         background-position: 0% 50%;

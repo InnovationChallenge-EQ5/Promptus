@@ -41,7 +41,7 @@ export default {
     plugin(function ({ matchUtilities, e }) {
       matchUtilities({
         'icon': (value) => ({
-          content: `"${value.replace(' ', '_')}"`,
+          content: "${value.replace(' ', '_')}",
         }),
       });
     }),
