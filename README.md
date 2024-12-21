@@ -116,3 +116,6 @@ For configure the flow you must explain the steps to follow:
 5. Update the nodes:
    - moderateTextNode: associate the Content Safety connection.
    - the others: associate the Azure OpenAI connection
+
+### Note
+On free accounts the flow may take a long time to run, preferably used on accounts with billing enabled.
