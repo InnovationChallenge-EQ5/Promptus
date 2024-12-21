@@ -108,10 +108,10 @@ The **Prompt Improvement Layer** is designed to enhance the quality and clarity 
 
 ## How to use:
 
-For configure the flow you must explain the steps to follow:
+For configure the flow you have to:
 1. Create Azure OpenAI, Azure AI Content Safety, Azure ML resources
 2. Create a deployment of 4o model in Azure OpenAI.
-3. Create prompt flow from file upload.
+3. Create prompt flow from file upload in Azure ML Studio or Azure AI Foundry.
 4. Create connections to Azure OpenAI and Azure AI Content Safety.
 5. Update the nodes:
    - moderateTextNode: associate the Content Safety connection.
