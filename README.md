@@ -105,3 +105,14 @@ The **Prompt Improvement Layer** is designed to enhance the quality and clarity 
    - **Clarification**: For ambiguous or unclear prompts, the system modifies the prompt by adding or adjusting text to align it with the RTCF framework, ensuring it is well-defined and actionable.
 
 4. [**outputDecisor**](https://github.com/InnovationChallenge-EQ5/Promptus/blob/main/Hackathon-promptflow/outputDecisor.py): This is a Python script that takes the output from either the `impRTCFPrompt` or `impNoRTCFPrompt` modules. It evaluates which output is non-empty and returns the final, improved prompt.
+
+## How to use:
+
+For configure the flow you must explain the steps to follow:
+1. Create Azure OpenAI, Azure AI Content Safety, Azure ML resources
+2. Create a deployment of 4o model in Azure OpenAI.
+3. Create prompt flow from file upload.
+4. Create connections to Azure OpenAI and Azure AI Content Safety.
+5. Update the nodes:
+   - moderateTextNode: associate the Content Safety connection.
+   - the others: associate the Azure OpenAI connection
