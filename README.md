@@ -1,4 +1,4 @@
-# PromptUS: Ensuring safe and effective prompts
+# Promptus: Ensuring safe and effective prompts
 
 Did you know that global spending on digital transformation technologies and services is expected to reach around $4 trillion by 2027? (Source: [Statista,2024](https://www.statista.com/statistics/870924/worldwide-digital-transformation-market-size/)) This surge in digital investment is accompanied by significant growth in the adoption of AI technologies. By 2023, between 40% and 70% of organizations worldwide had integrated AI into their operations, and this trend is set to continue (Source: [Statista, 2024](https://www.statista.com/statistics/742993/worldwide-survey-corporate-disruptive-technology-adoption/)).
 As of 2024, approximately 75% of people are using generative AI in their work, highlighting the rapid shift toward AI-powered tools. Furthermore, nearly half (46%) of those users have started utilizing AI within the last six months (Source: [Statista, 2024](https://www.statista.com/statistics/1482102/rate-of-generative-ai-utilization-globally/)).
